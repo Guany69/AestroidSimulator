@@ -1,141 +1,564 @@
 .page {
-  --background: #fafafa;
-  --foreground: #fff;
-
-  --text-primary: #000;
-  --text-secondary: #666;
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-  --button-secondary-border: #ebebeb;
-
-  display: flex;
   min-height: 100vh;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-geist-sans);
-  background-color: var(--background);
+  background: #ffffff;
+  color: #ffffff;
+  padding: 2rem;
 }
 
 .main {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.headerImage {
+  display: block;
+  margin: 0 auto 1rem auto;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+}
+
+.header h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  background: #000000;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.header p {
+  font-size: 1.25rem;
+  color: #94a3b8;
+}
+
+.searchForm {
+  background: #ffffff;
+  border: 1px solid #334155;
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 3rem;
+  backdrop-filter: blur(10px);
+}
+
+.dateInputs {
   display: flex;
-  min-height: 100vh;
-  width: 100%;
-  max-width: 800px;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  background-color: var(--foreground);
-  padding: 120px 60px;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
 }
 
-.intro {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 24px;
-}
-
-.intro h1 {
-  max-width: 320px;
-  font-size: 40px;
-  font-weight: 600;
-  line-height: 48px;
-  letter-spacing: -2.4px;
-  text-wrap: balance;
-  color: var(--text-primary);
-}
-
-.intro p {
-  max-width: 440px;
-  font-size: 18px;
-  line-height: 32px;
-  text-wrap: balance;
-  color: var(--text-secondary);
-}
-
-.intro a {
-  font-weight: 500;
-  color: var(--text-primary);
-}
-
-.ctas {
+.dateInputs label {
   display: flex;
   flex-direction: row;
-  width: 100%;
-  max-width: 440px;
-  gap: 16px;
-  font-size: 14px;
-}
-
-.ctas a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 128px;
-  border: 1px solid transparent;
-  transition: 0.2s;
-  cursor: pointer;
-  width: fit-content;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 200px;
   font-weight: 500;
+  color: #000000;
+  align-items: center;
 }
 
-a.primary {
-  background: var(--text-primary);
-  color: var(--background);
-  gap: 8px;
+.dateInputs input {
+  background: #ffffff;
+  color: #000000;
+  font-size: 1rem;
+  transition: all 0.2s ease;
 }
 
-a.secondary {
-  border-color: var(--button-secondary-border);
+.dateInputs input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
-  }
+.searchForm button {
+  width: 100%;
+  padding: 1rem;
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.searchForm button:hover:not(:disabled) {
+  border: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
 
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
+.searchForm button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error {
+  background: #7f1d1d;
+  border: 1px solid #991b1b;
+  color: #fecaca;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.loading {
+  text-align: center;
+  padding: 3rem;
+  font-size: 1.25rem;
+  color: #94a3b8;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.statCard {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.statCard h3 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 0.5rem 0;
+}
+
+.statCard p {
+  color: #94a3b8;
+  margin: 0;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.asteroidGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 2rem;
+}
+
+.modalContent {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border: 1px solid #334155;
+  border-radius: 20px;
+  padding: 2.5rem;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+
+  color: #000000; /* ✅ add this */
+}
+
+.modalContent h2 {
+  color: #ffffff; /* ✅ was #000 */
+}
+
+.modalDetails > p {
+  color: #ffffff; /* ✅ was #000 */
+}
+
+.impactStats > div {
+  color: #ffffff; /* ✅ was #000 */
+}
+
+.impactStats strong {
+  color: #ffffff; /* ✅ was #000 */
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid #475569;
+  color: #f1f5f9;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+}
+
+.modalContent h2 {
+  font-size: 1.75rem;
+  margin: 0 0 1.5rem 0;
+  color: #ffffff;
+  padding-right: 2rem;
+}
+
+.modalDetails h3 {
+  font-size: 1.5rem;
+  margin: 0 0 0.5rem 0;
+  background: #ffffff;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.modalDetails > p {
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+}
+
+.impactStats {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.impactStats > div {
+  background: #ffffff;
+  padding: 1rem;
+  border-radius: 8px;
+  color: #000000;
+}
+
+.impactStats strong {
+  color: #000000;
+  display: inline-block;
+  min-width: 140px;
+}
+
+.simulationButton {
+  width: 100%;
+  padding: 1rem;
+  margin-top: 1.5rem;
+  background: #ef4444;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.simulationButton:hover {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(239, 68, 68, 0.3);
+}
+
+.simulationOverlay {
+  position: fixed;
+  inset: 0;
+  background: #000000;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.simulationCloseButton {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  font-size: 2.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 2001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.simulationCloseButton:hover {
+  background: rgba(239, 68, 68, 0.3);
+  border-color: #ef4444;
+  transform: scale(1.1);
+}
+
+.simulationContent {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.earth {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
+  box-shadow: 0 0 60px rgba(59, 130, 246, 0.6);
+  animation: earthFloat 3s ease-in-out infinite;
+  overflow: hidden;
+}
+
+.crater {
+  position: absolute;
+  width: var(--crater-size, 50px);
+  height: var(--crater-size, 50px);
+  border-radius: 50%;
+  background: radial-gradient(circle, #1e1e1e 0%, #3a3a3a 40%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  animation: craterAppear 0.8s ease-out var(--fall-duration, 2000ms) forwards;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+.damageZone {
+  position: absolute;
+  width: calc(var(--crater-size, 50px) * 2.5);
+  height: calc(var(--crater-size, 50px) * 2.5);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(139, 92, 46, 0.6) 0%, rgba(120, 53, 15, 0.4) 50%, transparent 100%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  animation: damageSpread 1.2s ease-out var(--fall-duration, 2000ms) forwards;
+}
+
+.asteroid {
+  position: absolute;
+  width: var(--asteroid-size, 40px);
+  height: var(--asteroid-size, 40px);
+  border-radius: 50%;
+  background: linear-gradient(135deg, #78716c 0%, #44403c 100%);
+  box-shadow: 0 0 20px rgba(255, 100, 0, 0.8);
+  top: -100px;
+  animation: asteroidFall var(--fall-duration, 2000ms) ease-in forwards;
+}
+
+.explosion {
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fbbf24 0%, #f59e0b 30%, #ef4444 60%, transparent 100%);
+  opacity: 0;
+  animation: explode calc(var(--explosion-scale, 1) * 1s) ease-out var(--fall-duration, 2000ms) forwards;
+}
+
+.shockwave {
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  border-radius: 50%;
+  border: 3px solid rgba(239, 68, 68, 0.6);
+  opacity: 0;
+  animation: shockwave calc(var(--explosion-scale, 1) * 1.5s) ease-out var(--fall-duration, 2000ms) forwards;
+}
+
+.simulationText {
+  position: absolute;
+  bottom: 20%;
+  color: #ffffff;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  opacity: 0;
+  animation: fadeIn 1s ease-in 0.5s forwards;
+}
+
+.physicsData {
+  position: absolute;
+  top: 10%;
+  right: 2rem;
+  background: #000000;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  opacity: 0;
+  animation: fadeIn 1s ease-in 0.5s forwards;
+}
+
+.physicsData > div {
+  color: #ffffff;
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+  font-weight: 600;
+}
+
+@keyframes earthFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
   }
 }
 
-@media (max-width: 600px) {
-  .main {
-    padding: 48px 24px;
+@keyframes asteroidFall {
+  0% {
+    top: -100px;
+    left: 50%;
+    transform: translate(-50%, 0) scale(0.5);
+    opacity: 1;
   }
-
-  .intro {
-    gap: 16px;
+  99% {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
   }
-
-  .intro h1 {
-    font-size: 32px;
-    line-height: 40px;
-    letter-spacing: -1.92px;
+  100% {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
+@keyframes explode {
+  0% {
+    width: 0px;
+    height: 0px;
+    opacity: 0;
   }
+  50% {
+    width: calc(var(--explosion-scale, 1) * 400px);
+    height: calc(var(--explosion-scale, 1) * 400px);
+    opacity: 1;
+  }
+  100% {
+    width: calc(var(--explosion-scale, 1) * 600px);
+    height: calc(var(--explosion-scale, 1) * 600px);
+    opacity: 0;
+  }
+}
 
+@keyframes shockwave {
+  0% {
+    width: 0px;
+    height: 0px;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    width: calc(var(--explosion-scale, 1) * 800px);
+    height: calc(var(--explosion-scale, 1) * 800px);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes craterAppear {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: calc(var(--damage-scale, 0.5) * 0.9);
+  }
+}
+
+@keyframes damageSpread {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  50% {
+    opacity: calc(var(--damage-scale, 0.5) * 0.8);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: calc(var(--damage-scale, 0.5) * 0.5);
+  }
+}
+
+@media (max-width: 768px) {
   .page {
-    --background: #000;
-    --foreground: #000;
+    padding: 1rem;
+  }
 
-    --text-primary: #ededed;
-    --text-secondary: #999;
+  .header h1 {
+    font-size: 2rem;
+  }
 
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-    --button-secondary-border: #1a1a1a;
+  .header p {
+    font-size: 1rem;
+  }
+
+  .dateInputs {
+    flex-direction: column;
+  }
+
+  .asteroidGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .modalContent {
+    padding: 1.5rem;
+  }
+
+  .earth {
+    width: 200px;
+    height: 200px;
+  }
+
+  .simulationText {
+    font-size: 1.5rem;
   }
 }
