@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import styles from './page.module.css';
 import type { Asteroid, NeoFeedResponse } from '@/types/asteroid';
 import AsteroidCard from '@/components/AsteroidCard';
+import Simulation3D from '@/components/Simulation3D';
 import { Comic_Neue } from 'next/font/google';
 
 const comicNeue = Comic_Neue({
@@ -20,6 +21,13 @@ export default function Home() {
   const [error, setError] = useState('');
   const [selectedAsteroid, setSelectedAsteroid] = useState<Asteroid | null>(null);
   const [showSimulation, setShowSimulation] = useState(false);
+  const [simulationParams, setSimulationParams] = useState({
+    asteroidDiameter: 100,
+    explosionScale: 1,
+    fallDuration: 2000,
+    craterSize: 10,
+    damageScale: 0.5,
+  });
 
   useEffect(() => { // Set default dates on initial load
     const today = new Date().toISOString().split('T')[0];
@@ -75,8 +83,6 @@ export default function Home() {
   };
 
   const handleRunSimulation = () => {
-    setShowSimulation(true);
-
     if (selectedAsteroid) {
       // Calculate physics-based animation duration
       const velocity = parseFloat(selectedAsteroid.close_approach_data[0].relative_velocity.kilometers_per_second);
@@ -95,13 +101,15 @@ export default function Home() {
       // Damage scale based on energy (bigger impacts = more visible damage)
       const damageScale = Math.min(1, energy / 1000); // Cap at 1000 megatons for visual scale
 
-      // Store physics data for CSS (via CSS custom properties)
-      document.documentElement.style.setProperty('--fall-duration', `${fallDuration}ms`);
-      document.documentElement.style.setProperty('--explosion-scale', `${explosionScale}`);
-      document.documentElement.style.setProperty('--asteroid-size', `${Math.min(80, Math.max(20, diameter / 5))}px`);
-      document.documentElement.style.setProperty('--crater-size', `${Math.min(150, Math.max(30, craterSize * 3))}px`);
-      document.documentElement.style.setProperty('--damage-scale', `${damageScale}`);
+      setSimulationParams({
+        asteroidDiameter: diameter,
+        explosionScale,
+        fallDuration,
+        craterSize,
+        damageScale,
+      });
     }
+    setShowSimulation(true);
   };
 
   const handleCloseSimulation = () => {
@@ -203,26 +211,21 @@ export default function Home() {
             <button className={styles.simulationCloseButton} onClick={handleCloseSimulation}>
               ×
             </button>
-            <div className={styles.simulationContent}>
-              <div className={styles.earth}>
-                <div className={styles.crater}></div>
-                <div className={styles.damageZone}></div>
-              </div>
-              <div className={styles.asteroid}></div>
-              <div className={styles.explosion}></div>
-              <div className={styles.shockwave}></div>
-              <div className={styles.simulationText}>
-                {selectedAsteroid.name} Impact Simulation
-              </div>
-              <div className={styles.physicsData}>
-                <div>Velocity: {parseFloat(selectedAsteroid.close_approach_data[0].relative_velocity.kilometers_per_second).toFixed(2)} km/s</div>
-                <div>Energy: {calculateImpactEnergy(
-                  selectedAsteroid.estimated_diameter.meters.estimated_diameter_max,
-                  parseFloat(selectedAsteroid.close_approach_data[0].relative_velocity.kilometers_per_second)
-                )} megatons TNT</div>
-                <div>Diameter: {selectedAsteroid.estimated_diameter.meters.estimated_diameter_max.toFixed(0)}m</div>
-                <div>Crater: {calculateCraterSize(selectedAsteroid.estimated_diameter.meters.estimated_diameter_max)} km</div>
-              </div>
+            <Simulation3D
+              asteroidDiameter={simulationParams.asteroidDiameter}
+              explosionScale={simulationParams.explosionScale}
+              fallDuration={simulationParams.fallDuration}
+              craterSize={simulationParams.craterSize}
+              damageScale={simulationParams.damageScale}
+            />
+            <div className={styles.physicsData}>
+              <div>Velocity: {parseFloat(selectedAsteroid.close_approach_data[0].relative_velocity.kilometers_per_second).toFixed(2)} km/s</div>
+              <div>Energy: {calculateImpactEnergy(
+                selectedAsteroid.estimated_diameter.meters.estimated_diameter_max,
+                parseFloat(selectedAsteroid.close_approach_data[0].relative_velocity.kilometers_per_second)
+              )} megatons TNT</div>
+              <div>Diameter: {selectedAsteroid.estimated_diameter.meters.estimated_diameter_max.toFixed(0)}m</div>
+              <div>Crater: {calculateCraterSize(selectedAsteroid.estimated_diameter.meters.estimated_diameter_max)} km</div>
             </div>
           </div>
         )}
